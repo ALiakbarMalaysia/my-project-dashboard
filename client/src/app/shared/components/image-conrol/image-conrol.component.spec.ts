@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImgageControlComponent } from './imgage-control.component';
+import { ImageConrolComponent } from './image-conrol.component';
 
-describe('ImgageControlComponent', () => {
-  let component: ImgageControlComponent;
-  let fixture: ComponentFixture<ImgageControlComponent>;
+describe('ImageConrolComponent', () => {
+  let component: ImageConrolComponent;
+  let fixture: ComponentFixture<ImageConrolComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImgageControlComponent ]
+      declarations: [ ImageConrolComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ImgageControlComponent);
+    fixture = TestBed.createComponent(ImageConrolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
