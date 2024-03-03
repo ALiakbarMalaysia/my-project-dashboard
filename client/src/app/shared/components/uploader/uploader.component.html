@@ -1,0 +1,91 @@
+<form [formGroup]="form" (ngSubmit)="submit(form.value)">
+  <div class="d-flex justify-content-around">
+    <!-- form upload -->
+    <section class="upload_selected-category">
+      <!-- product_name -->
+      <input type="text" fullWidth class="form-control mt-2" placeholder="نام محصول" formControlName="product_name" />
+      <ng-container *ngIf="form.controls.product_name.touched">
+        <p class="caption status-danger" *ngIf="form.controls.product_name.errors?.required">
+          نام محصول الزامی میباشد
+        </p>
+        <!-- <p
+            class="caption status-danger"
+            *ngIf="form.errors?.minlength || form.errors?.maxlength"
+          >
+            نام محصول باید در لیست وححود داشته باشد from
+            {{ getConfigValue("form.validation.product_name.minLength") }} to
+            {{ getConfigValue("form.validation.product_name.maxLength") }}
+            characters
+          </p> -->
+      </ng-container>
+      <!-- product_price -->
+      <input currencyMask [(ngModel)]="priceValue" [options]="{ prefix: 'ريال ', thousands: '.', precision: 0 }"
+        fullWidth formControlName="product_price" class="form-control mt-2" placeholder="قیمت محصول" />
+      <!-- product_weight -->
+      <input currencyMask [options]="{ prefix: 'kg ', thousands: '.', precision: 0 }" fullWidth
+        formControlName="product_weight" class="form-control mt-2" placeholder="وزن محصول" />
+      <!-- product_cart_description -->
+      <input type="text" fullWidth formControlName="product_cart_description" class="form-control mt-2"
+        placeholder="توضیحات محصول" />
+      <ng-container *ngIf="form.controls.product_price.touched">
+        <p class="caption status-danger" *ngIf="form.controls.product_price.errors?.required">
+          قیمت محصول الزامی میباشد
+        </p>
+      </ng-container>
+    </section>
+
+    <!-- Upload Img -->
+    <section>
+      <!-- <button type="button" nbButton (click)="openUploadImg()">Open Dialog with component</button> -->
+      <button type="button" nbButton (click)="openUploadImg()">Open Dialog</button>
+      
+    </section>
+    <img id="tb-image" width="550" height="300" *ngIf="getImge" [src]="getImge" />
+
+    <!-- product_img -->
+    <!-- <section class="container upload_selected-img">
+      <label for="images" class="drop-container" id="dropcontainer">
+        <span class="drop-title">لطفا یک عکس اتخاب کنید</span>
+
+        <input type="file" id="images" accept="image/*" formControlName="product_img" required
+          (change)="onChange($event)" />
+      </label>
+      <div class="image mt-2 mb-2">
+        <img id="tb-image" width="550" height="300" *ngIf="imageUrl" [src]="imageUrl" />
+      </div>
+      <div *ngIf="file">
+        <div class="image mt-2 mb-2"></div>
+        <section class="file-info">
+          مشخصات فایل:
+          <ul>
+            <li>نام:&nbsp;&nbsp;&nbsp; {{ fileToUpload.name }}</li>
+            <li>نوع:&nbsp;&nbsp;&nbsp; {{ fileToUpload.type }}</li>
+            <li>سایز:&nbsp;&nbsp;&nbsp; {{ fileToUpload.size }} bytes</li>
+          </ul>
+        </section>
+
+        <button type="button" nbButton status="primary" (click)="onUpload()" style="width: 100%">
+          آپلود عکس
+        </button>
+
+        <section [ngSwitch]="status" class="pt-2">
+          <p *ngSwitchCase="'uploading'">⏳ در انتظار آپلود عکس...</p>
+          <p *ngSwitchCase="'success'">✅ انجام شد!</p>
+          <p *ngSwitchCase="'fail'">❌ با خطا مواجه شد!</p>
+          <p *ngSwitchDefault>😶 در انتظار آپلود ...</p>
+        </section>
+      </div>
+    </section> -->
+  </div>
+  <hr />
+  <footer class="d-flex justify-content-end">
+    <button [disabled]="!form.valid" type="submit" nbButton status="primary">
+      ارسال
+    </button>
+  </footer>
+
+ 
+    
+
+  
+</form>

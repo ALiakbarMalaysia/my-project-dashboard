@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("//fonts.googleapis.com/earlyaccess/notosanstc.css");
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.mat-calendar-body-cell.selected {
+  background-color: red !important;
+  border-radius: 50%;
+}
+.drop-calendar {
+  width: 30rem;
+}
+
+
+// @import url("./assets/css/index.scss");
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
+@font-face {
+  font-family: "Iranyekan";
+  src: url("./assets/fonts/iranYekan/Qs_Iranyekan\ bold.ttf") format("woff2"),
+    url("./assets/fonts/iranYekan/Qs_Iranyekan\ light.ttf") format("woff"),
+    url("./assets/fonts/iranYekan/Qs_Iranyekan.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body *,
+input,
+textarea,
+textarea::placeholder,
+input::placeholder {
+  font-family: "Iranyekan", sans-serif !important;
+}
+
+:host-context(.nb-theme-cosmic) nb-menu {
+  direction: rtl;
+}
+a,
+a:hover {
+  text-decoration: none;
+}

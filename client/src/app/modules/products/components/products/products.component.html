@@ -1,0 +1,26 @@
+<div class="product-grid">
+  <div *ngFor="let product of dataProduct" class="product-card">
+    <div class="card">
+      <img [src]="product.product_imgShow" alt="{{ product.product_imgShow }}">
+      <div class="d-flex justify-content-between align-items-center pt-2 pl-2 pr-2">
+        <p class=""> نام محصول :</p>
+        <p>{{ product.product_name }}</p>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between pl-2 pr-2">
+        <p class=""> قیمت محصول:</p>
+        <p>{{ product?.product_price }} ریال</p>
+      </div>
+      <p class="description">
+        {{product?.product_cart_description}}
+      </p>
+      <div class="card-footer">
+        <button type="button" class="mat-ripple status-success size-medium shape-rectangle appearance-hero" nbButton
+          (click)="finalUploadProduct()">آپلود نهایی</button>
+        <button type="button" class="mat-ripple size-medium shape-rectangle appearance-hero status-danger" nbButton
+          (click)="finalUploadProduct()">حذف محصول</button>
+
+      </div>
+
+    </div>
+  </div>

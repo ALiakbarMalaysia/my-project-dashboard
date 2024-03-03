@@ -1,0 +1,84 @@
+<div class="col-12 container">
+  <nb-card>
+    <nb-card-header>
+      <h3>ورود</h3>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <div class="form-group">
+          <label for="Email" class="label">نام کاربری یا آدرس ایمیل *</label>
+          <input
+            type="email"
+            nbInput
+            formControlName="user_email"
+            fullWidth
+            id="email"
+          />
+          <ng-container *ngIf="loginForm.controls.user_email.touched">
+            <p
+              class="caption status-danger"
+              *ngIf="loginForm.controls.user_email.errors?.required"
+            >
+              لطفا ایمیل خود را وارد کنید
+            </p>
+          </ng-container>
+        </div>
+        <nb-form-field>
+          <label for="password" class="label"> رمزعبور </label>
+          <input
+            fullWidth
+            formControlName="user_password"
+            [type]="getInputType()"
+            nbInput
+          />
+          <button
+            nbSuffix
+            type="button"
+            nbButton
+            ghost
+            (click)="toggleShowPassword()"
+          >
+            <nb-icon
+              [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'"
+              pack="eva"
+              [attr.aria-label]="
+                showPassword ? 'hide password' : 'show password'
+              "
+            >
+            </nb-icon>
+          </button>
+          <ng-container *ngIf="loginForm.controls.user_password.touched">
+            <p
+              class="caption status-danger"
+              *ngIf="loginForm.controls.user_password.errors?.required"
+            >
+              تکرار رمز عبور الزامی میباشد
+            </p>
+          </ng-container>
+        </nb-form-field>
+        <div class="form-group">
+          <nb-checkbox>مرا به خاطر بسپار</nb-checkbox>
+        </div>
+        <button
+          type="submit"
+          [disabled]="!loginForm.valid"
+          nbButton
+          status="primary"
+          class="sbumit_btn"
+        >
+          ورود
+        </button>
+      </form>
+
+      <section
+        class="d-flex justify-content-between pt-2"
+        aria-label="Register"
+      >
+        <a class="text-link" routerLink="../register">عضویت</a>
+        <a class="text-link" routerLink="../request-password"
+          >گذرواژه خود را فراموش کرده اید؟</a
+        >
+      </section>
+    </nb-card-body>
+  </nb-card>
+</div>

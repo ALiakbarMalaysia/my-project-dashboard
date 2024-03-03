@@ -1,0 +1,102 @@
+<nb-card>
+    <nb-card-header>{{ title }}</nb-card-header>
+    <nb-card-body>
+
+        <div class="wrapper">
+            <div class="box a">
+                <div class="text-center col-md-12">
+                    <section class="container upload_selected-img">
+                        <label for="images" class="drop-container" id="dropcontainer">
+                            <span class="drop-title">لطفا یک عکس اتخاب کنید</span>
+
+                            <input type="file" id="images" accept="image/*" (change)="fileChangeEvent($event)" />
+                        </label>
+                        <!-- <div class="custom-control custom-checkbox mb-2">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1" [value]="maintainAspectRatio" (change)="changeMaintainAspectRatio()">
+                            <label class="custom-control-label" for="customCheck1">Maintain aspect ratio</label>
+                          </div> -->
+                        <div *ngIf="file">
+                            <div class="image mt-2 mb-2"></div>
+                            <section class="file-info">
+                                مشخصات فایل:
+                                <ul>
+                                    <li>نام:&nbsp;&nbsp;&nbsp; {{ fileToUpload.name }}</li>
+                                    <li>نوع:&nbsp;&nbsp;&nbsp; {{ fileToUpload.type }}</li>
+                                    <li>سایز:&nbsp;&nbsp;&nbsp; {{ fileToUpload.size }} bytes</li>
+                                </ul>
+                            </section>
+
+                            <!-- <button type="button" nbButton status="primary" (click)="onUpload()" style="width: 100%">
+                            آپلود عکس
+                          </button> -->
+
+                            <section [ngSwitch]="status" class="pt-2">
+                                <p *ngSwitchCase="'uploading'">⏳ در انتظار آپلود عکس...</p>
+                                <p *ngSwitchCase="'success'">✅ انجام شد!</p>
+                                <p *ngSwitchCase="'fail'">❌ با خطا مواجه شد!</p>
+                                <p *ngSwitchDefault>😶 در انتظار آپلود ...</p>
+                            </section>
+                        </div>
+                    </section>
+                    <!-- <input  name="file-upload-field" type="file" class="file-upload-field"  /> -->
+                    <!-- <div class="zone" (change)="fileChangeEvent($event)">
+                        <label for="images">آپلود عکس</label>
+                        <span class="drop-title">لطفا یک عکس اتخاب کنید</span>
+                        <input  type="file" id="images" accept="image/*" >
+                    </div> -->
+                    <br>
+                    <div class="mt-5">
+                        <button class="btn btn-info" (click)="clear()">Clear</button>
+                        <button nbButton (click)="rotateRight()">
+                            <img src="../../../../assets/images/icons/rotate-right.png" width="50%" height="50%" alt="">
+
+                        </button>
+                        <button nbButton (click)="flipHorizontal()" class="mr-2">
+                            <img src="../../../../assets/images/icons/flip.png" width="50%" height="50%" alt="">
+                        </button>
+
+                        <button nbButton (click)="flipVertical()" class="mr-2">
+                            <img src="../../../../assets/images/icons/alignment.png" width="50%" height="50%" alt="">
+                        </button>
+                        <button nbButton (click)="rotateLeft()" class="mr-2">
+                            <img src="../../../../assets/images/icons/rotate-left-circular-arrow-interface-symbol.png"
+                                width="50%" height="50%" alt="">
+                        </button>
+                        <div class="d-flex mt-3">
+                            <input [(ngModel)]="rotation" placeholder="Rotation" nbInput type="number" class="mt-3"
+                                (keyup)="updateRotation()" />
+                            <button nbButton (click)="zoomOut()" class="mr-2 btn btn-success zoom-btn">Zoom -</button>
+                            <button nbButton (click)="zoomIn()" class="mr-2 btn btn-success">Zoom +</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="box b">
+                <div class="crop_img">
+                    <h5>Crop Image</h5>
+                    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                        [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="4 / 3"
+                        [resizeToWidth]="256" [cropperMinWidth]="128" [onlyScaleDown]="true" [roundCropper]="false"
+                        [canvasRotation]="canvasRotation" [transform]="transform" [alignImage]="'left'"
+                        [style.display]="showCropper ? null : 'none'" format="png" (imageCropped)="imageCropped($event)"
+                        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
+                        (loadImageFailed)="loadImageFailed()">
+                    </image-cropper>
+                </div>
+            </div>
+            <div class="box c">
+                <!-- preview -->
+                <h5>Preview</h5>
+                <img [src]="croppedImage" />
+            </div>
+
+        </div>
+
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" (click)="dismiss()">بستن</button>
+        <button nbButton hero status="success" (click)="onUpload()" class="mr-2">آپلود عکس</button>
+    </nb-card-footer>
+</nb-card>

@@ -1,0 +1,89 @@
+
+
+
+
+
+.card {
+  margin: 0.5rem;
+  width: 100%; 
+  max-width: 350px;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 20px 50px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  transition: 0.15s ease-in;
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 0 0 2px #16c79a, 0 10px 60px 0 rgba(#000, 0.1);
+    transform: translatey(-5px);
+  }
+}
+
+.card-image {
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 15rem;
+  min-height: 12rem;
+  max-width: 22rem;
+  padding: 5px;
+  img{
+    border-radius: 10px;
+  }
+}
+
+.card-header {
+  padding: 0.75rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+ 
+}
+
+
+
+.card-footer {
+  margin-top: 1.25rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+
+.description {
+  color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
+    width: calc(100% - 0rem);
+    line-height: 1.75rem;
+    padding: 0rem;
+    position: absolute;
+    height: 250px;
+    overflow: auto;
+    opacity: 0;
+    border-radius: 0.5rem;
+    transition: opacity 200ms ease-out;
+}
+
+.item figure:hover + .description,
+.description:hover {
+  opacity: 1;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr)); /* Adjust column width as needed */
+  gap: 20px; /* Adjust gap between products */
+}
+
+.product-card {
+  padding: 10px;
+  text-align: center;
+}
+
+.product-card img {
+  max-width: 100%;
+  height: 250px;
+}
