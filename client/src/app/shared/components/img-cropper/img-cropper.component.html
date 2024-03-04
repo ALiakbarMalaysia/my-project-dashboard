@@ -2,6 +2,29 @@
     <nb-card-header>{{ title }}</nb-card-header>
     <nb-card-body>
 
+        <h1 mat-dialog-title>Edit Image:</h1>
+
+        <div mat-dialog-content>
+            <div class="row p-5">
+                <div class="col-12">
+                    <image-cropper [imageFile]="data.file" [autoCrop]="false" [transform]="transform"></image-cropper>
+                </div>
+            </div>
+        </div>
+
+        <div mat-dialog-actions class="d-flex justify-content-center">
+            <mat-slider class="zoom-slider" [min]="max * -1" [max]="max" step="0.1" [value]="zoom"
+                (input)="onSliderChange($event.value)"></mat-slider>
+        </div>
+
+        <div mat-dialog-actions class="d-flex justify-content-end">
+            <button mat-button class="dnet-button-wizard-back" (click)="onClose()">Close</button>
+            <button mat-button class="dnet-button-wizard-next" (click)="onAccept()">
+                Accept
+            </button>
+        </div>
+
+        <!-- 
         <div class="wrapper">
             <div class="box a">
                 <div class="text-center col-md-12">
@@ -11,10 +34,6 @@
 
                             <input type="file" id="images" accept="image/*" (change)="fileChangeEvent($event)" />
                         </label>
-                        <!-- <div class="custom-control custom-checkbox mb-2">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1" [value]="maintainAspectRatio" (change)="changeMaintainAspectRatio()">
-                            <label class="custom-control-label" for="customCheck1">Maintain aspect ratio</label>
-                          </div> -->
                         <div *ngIf="file">
                             <div class="image mt-2 mb-2"></div>
                             <section class="file-info">
@@ -26,10 +45,7 @@
                                 </ul>
                             </section>
 
-                            <!-- <button type="button" nbButton status="primary" (click)="onUpload()" style="width: 100%">
-                            آپلود عکس
-                          </button> -->
-
+                          
                             <section [ngSwitch]="status" class="pt-2">
                                 <p *ngSwitchCase="'uploading'">⏳ در انتظار آپلود عکس...</p>
                                 <p *ngSwitchCase="'success'">✅ انجام شد!</p>
@@ -38,12 +54,7 @@
                             </section>
                         </div>
                     </section>
-                    <!-- <input  name="file-upload-field" type="file" class="file-upload-field"  /> -->
-                    <!-- <div class="zone" (change)="fileChangeEvent($event)">
-                        <label for="images">آپلود عکس</label>
-                        <span class="drop-title">لطفا یک عکس اتخاب کنید</span>
-                        <input  type="file" id="images" accept="image/*" >
-                    </div> -->
+                 
                     <br>
                     <div class="mt-5">
                         <button class="btn btn-info" (click)="clear()">Clear</button>
@@ -87,16 +98,12 @@
                 </div>
             </div>
             <div class="box c">
-                <!-- preview -->
                 <h5>Preview</h5>
                 <img [src]="croppedImage" />
             </div>
 
-        </div>
+        </div> -->
 
     </nb-card-body>
-    <nb-card-footer>
-        <button nbButton hero status="primary" (click)="dismiss()">بستن</button>
-        <button nbButton hero status="success" (click)="onUpload()" class="mr-2">آپلود عکس</button>
-    </nb-card-footer>
+
 </nb-card>

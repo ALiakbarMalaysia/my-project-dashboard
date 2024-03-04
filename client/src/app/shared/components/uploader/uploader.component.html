@@ -35,47 +35,37 @@
     </section>
 
     <!-- Upload Img -->
-    <section>
-      <!-- <button type="button" nbButton (click)="openUploadImg()">Open Dialog with component</button> -->
-      <button type="button" nbButton (click)="openUploadImg()">Open Dialog</button>
-      
-    </section>
-    <img id="tb-image" width="550" height="300" *ngIf="getImge" [src]="getImge" />
-
-    <!-- product_img -->
-    <!-- <section class="container upload_selected-img">
-      <label for="images" class="drop-container" id="dropcontainer">
-        <span class="drop-title">لطفا یک عکس اتخاب کنید</span>
-
-        <input type="file" id="images" accept="image/*" formControlName="product_img" required
-          (change)="onChange($event)" />
-      </label>
-      <div class="image mt-2 mb-2">
-        <img id="tb-image" width="550" height="300" *ngIf="imageUrl" [src]="imageUrl" />
+    <div class="container">
+      <div class="row mt-3 d-flex justify-content-center">
+        <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+          <div class="upload-file d-flex justify-content-center align-items-center">
+            <img class="responsive" [src]="sanitizeImagePreview" *ngIf="sanitizeImagePreview" />
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              (change)="onImageChange($event)"
+            />
+            <div
+              class="
+                d-flex
+                flex-column
+                justify-content-center
+                align-items-center
+                upload-file-zone
+              "
+              *ngIf="!sanitizeImagePreview"
+            >
+              <span class="lla-no-pic-grey lla-no-pic"> </span>
+              <span class="upload-text coms-m-t-5">Add Picture</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div *ngIf="file">
-        <div class="image mt-2 mb-2"></div>
-        <section class="file-info">
-          مشخصات فایل:
-          <ul>
-            <li>نام:&nbsp;&nbsp;&nbsp; {{ fileToUpload.name }}</li>
-            <li>نوع:&nbsp;&nbsp;&nbsp; {{ fileToUpload.type }}</li>
-            <li>سایز:&nbsp;&nbsp;&nbsp; {{ fileToUpload.size }} bytes</li>
-          </ul>
-        </section>
+    </div>
+    
+    
 
-        <button type="button" nbButton status="primary" (click)="onUpload()" style="width: 100%">
-          آپلود عکس
-        </button>
-
-        <section [ngSwitch]="status" class="pt-2">
-          <p *ngSwitchCase="'uploading'">⏳ در انتظار آپلود عکس...</p>
-          <p *ngSwitchCase="'success'">✅ انجام شد!</p>
-          <p *ngSwitchCase="'fail'">❌ با خطا مواجه شد!</p>
-          <p *ngSwitchDefault>😶 در انتظار آپلود ...</p>
-        </section>
-      </div>
-    </section> -->
   </div>
   <hr />
   <footer class="d-flex justify-content-end">

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { Dimensions, ImageCroppedEvent, ImageCropperComponent, ImageTransform } from 'ngx-image-cropper';
 import { UploaderService } from '../../services/uploader.service';
@@ -6,6 +6,7 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { IUploadIMG } from '../../interfaces/uploader.interface';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 
@@ -26,7 +27,10 @@ export class ImgCropperComponent {
 
 
   @ViewChild('myInput') myInputVariable!: ElementRef;
-
+  @ViewChild(ImageCropperComponent) imageCropper: ImageCropperComponent;
+  max: number = 2;
+  zoom: number = 0;
+  transform: ImageTransform = {};
   imageChangedEvent: any = '';
   croppedImage: any = '';
   canvasRotation = 0;
@@ -34,16 +38,33 @@ export class ImgCropperComponent {
   scale = 1;
   showCropper = false;
   containWithinAspectRatio = false;
-  transform: ImageTransform = {};
   imageUrl = "";
   fileToUpload;
 
 
 
-  constructor(protected ref: NbDialogRef<ImgCropperComponent>,
+  constructor(
     private uploadService: UploaderService,
     private toasService:ToastrService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    public dialogRef: MatDialogRef<ImgCropperComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { file: File }
+    ) { }
+    
+    onSliderChange(value) {
+      this.zoom = value;
+      const scale = value >= 0 ? value + 1 : 1 - (value / this.max) * -1;
+      this.transform = { scale };
+    }
+
+    onClose() {
+      this.dialogRef.close();
+    }
+
+    onAccept() {
+      const event = this.imageCropper.crop();
+      this.dialogRef.close(event);
+    }
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -66,6 +87,7 @@ export class ImgCropperComponent {
   imageCropped(event: ImageCroppedEvent) {
     debugger;
     this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+
     // this.croppedImage = event.objectUrl;
 
   }
@@ -156,6 +178,8 @@ export class ImgCropperComponent {
   }
 
   onChange(event: any) {
+    debugger;
+
     const files = event.target.files;
     this.fileToUpload = event.target.files[0];
     //Show image preview
@@ -164,7 +188,6 @@ export class ImgCropperComponent {
       this.imageUrl = event.target.result;
     };
     reader.readAsDataURL(this.fileToUpload);
-    debugger;
 
     if (files) {
       this.status = "initial";
@@ -175,14 +198,14 @@ export class ImgCropperComponent {
  
   onUpload() {
     debugger
-      const upload$ = this.uploadService.uploadImage(this.croppedImage.blob);
+      const upload$ = this.uploadService.uploadImage(this.file);
       this.status = "uploading";
       upload$.subscribe({
         next: (res:IUploadIMG) => {
           this.uploadService.getDataImg$.next(res.filename)
           this.status = "success";
           this.dismiss()
-          this.toasService.success('عکس با  موفقیت ذخیره شد')
+          this.toasService.success('عکس با موفقیت ذخیره شد')
         },
         error: (error: any) => {
           this.status = "fail";
@@ -192,7 +215,7 @@ export class ImgCropperComponent {
   }
 
   dismiss() {
-    this.ref.close()
+    this.dialogRef.close()
   }
   changeMaintainAspectRatio = () => this.resetImage();
 

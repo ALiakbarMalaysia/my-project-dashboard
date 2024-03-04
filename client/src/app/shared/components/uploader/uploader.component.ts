@@ -12,6 +12,8 @@ import { IProducts } from "../../interfaces/product.interface";
 import { ICategories } from "../../interfaces/uploader.interface";
 import { UploaderService } from "../../services/uploader.service";
 import { ImgCropperComponent } from "../img-cropper/img-cropper.component";
+import { ImageCroppedEvent } from "ngx-image-cropper";
+import { MatDialog } from "@angular/material/dialog";
 
 
 @Component({
@@ -39,11 +41,13 @@ export class UploaderComponent {
   profileImage = '';
   imageToCrop: File;
   getImge;
+  sanitizeImagePreview;
 
   constructor(
     private uploadService: UploaderService,
     private toastService: ToastrService,
     private dialogService: NbDialogService,
+    private dialog: MatDialog
   ) {
     this.uploadService.getDataImg$.subscribe((res)=>{
    this.product_img = res
@@ -69,75 +73,81 @@ export class UploaderComponent {
     });
   }
 
-  onChange(event: any) {
-    const files = event.target.files;
-    this.fileToUpload = event.target.files[0];
-    //Show image preview
-    let reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-    };
-    reader.readAsDataURL(this.fileToUpload);
 
-    if (files) {
-      this.status = "initial";
-      this.file = files;
-    }
+  onImageChange(event) {
+    if (!event.target.files.length) return;
+    const file = event.target.files[0];
+    this.dialog
+      .open(ImgCropperComponent, { data: { file } })
+      .afterClosed()
+      .subscribe(
+        (event: ImageCroppedEvent) => (this.sanitizeImagePreview = event.base64)
+      );
   }
 
-  onUpload() {
-    if (this.file) {
-      // const formData: FormData = new FormData();
-      // const fileToUpload = this.file[0] as File;
-      // const formData = new FormData();
-      // formData.append('file', fileToUpload, fileToUpload.name);
+  // onChange(event: any) {
+  //   const files = event.target.files;
+  //   this.fileToUpload = event.target.files[0];
+  //   //Show image preview
+  //   let reader = new FileReader();
+  //   reader.onload = (event: any) => {
+  //     this.imageUrl = event.target.result;
+  //   };
+  //   reader.readAsDataURL(this.fileToUpload);
 
-      // formData.append("image", this.file, this.file.name);
-      const upload$ = this.uploadService.uploadImage(this.file);
-      this.status = "uploading";
-      upload$.subscribe({
-        next: () => {
-          this.status = "success";
-        },
-        error: (error: any) => {
-          this.status = "fail";
-          return throwError(() => error);
-        },
-      });
-    }
-  }
+  //   if (files) {
+  //     this.status = "initial";
+  //     this.file = files;
+  //   }
+  // }
 
-  onSelectStatus(formData: IProducts): void {
-    if (formData) {
-      // this.uploadService.addProducts(formData);
-    }
-  }
+  // onUpload() {
+  //   if (this.file) {
+  //     // const formData: FormData = new FormData();
+  //     // const fileToUpload = this.file[0] as File;
+  //     // const formData = new FormData();
+  //     // formData.append('file', fileToUpload, fileToUpload.name);
 
+  //     // formData.append("image", this.file, this.file.name);
+  //     const upload$ = this.uploadService.uploadImage(this.file);
+  //     this.status = "uploading";
+  //     upload$.subscribe({
+  //       next: () => {
+  //         this.status = "success";
+  //       },
+  //       error: (error: any) => {
+  //         this.status = "fail";
+  //         return throwError(() => error);
+  //       },
+  //     });
+  //   }
+  // }
 
+  // onSelectStatus(formData: IProducts): void {
+  //   if (formData) {
+  //     // this.uploadService.addProducts(formData);
+  //   }
+  // }
 
-  openUploadImg(){
-    this.dialogService.open(ImgCropperComponent, {
-      context: {
-        title: 'This is a title passed to the dialog component',
-      },
-    })
+  // openUploadImg(){
+  //   this.dialogService.open(ImgCropperComponent, {
+  //     context: {
+  //       title: 'This is a title passed to the dialog component',
+  //     },
+  //   })
       
-  }
+  // }
+  // handleFileClick(file: HTMLInputElement): void {
+  //   file.click(); // trigger input file
+  // }
 
-
-  
-
-  handleFileClick(file: HTMLInputElement): void {
-    file.click(); // trigger input file
-  }
-
-  fileChangeEvent(event: any): void {
-    if (event.target.files.length) {
-      this.imageToCrop = event;
-    } else {
-      this.profileImage = '';
-    }
-  }
+  // fileChangeEvent(event: any): void {
+  //   if (event.target.files.length) {
+  //     this.imageToCrop = event;
+  //   } else {
+  //     this.profileImage = '';
+  //   }
+  // }
 
   onCrop(image: File) {
     if (image) {

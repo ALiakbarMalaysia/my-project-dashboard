@@ -17,7 +17,7 @@ import { UploaderComponent } from "./components/uploader/uploader.component";
 import { PersianNumberDirective } from './directives/persian-number.directive';
 import { SplicNumberCommaDirective } from './directives/splic-number-comma.directive';
 import { SpliceNumberDirective } from "./directives/splice-number.directive";
-
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     SpliceNumberDirective,
@@ -45,6 +45,7 @@ import { SpliceNumberDirective } from "./directives/splice-number.directive";
     ImageCropperModule,
     NbDialogModule,
     NbCardModule,
+    MatDialogModule
     
     
   ],
